@@ -519,7 +519,7 @@ class MemoryF2aFlash : public MemoryRom{
             return -1;
     }
 
-    int32_t waitEraseReady(uint32_t wadd){
+    void waitEraseReady(uint32_t wadd){
         uint16_t a, b, i=0;
         // check progress
         while(1){
@@ -544,7 +544,7 @@ class MemoryF2aFlash : public MemoryRom{
         }
     }
 
-    int32_t waitWriteReady(uint32_t wadd){
+    void waitWriteReady(uint32_t wadd){
         uint16_t a, b, i=0;
         // check progress
         while(1){
@@ -823,6 +823,7 @@ class MemoryBackupSram : public MemoryBackup{
     uint8_t *tmp = new uint8_t[len];
     memset(tmp, 0xff, len);
     save(0, tmp, len);
+    return 1;
   }
 };
 
@@ -830,6 +831,7 @@ class MemoryBackupSram : public MemoryBackup{
 class MemoryBackupEEPRom : public MemoryBackup{
 	public:
 	static int32_t find(){
+      return -1;
 	}
 
   int32_t getDeviceCode(uint16_t *code){
@@ -1001,6 +1003,7 @@ class MemoryBackupFlash : public MemoryBackup{
       draw_progress(100);
       // command reset
       write(0x0000, 0x00f0);
+      return 1;
   }
 
   int32_t chipErase(){
@@ -1071,6 +1074,7 @@ class MemoryBackupFlashAtmel : public MemoryBackupFlash{
       draw_progress(100);
       // command reset
       write(0x0000, 0x00f0);
+      return 1;
   }
 
 };
@@ -1146,6 +1150,7 @@ class MemoryBackupFlashLarge : public MemoryBackupFlash{
       draw_progress(100);
       // command reset
       write(0x0000, 0x00f0);
+      return 1;
   }
 
 
